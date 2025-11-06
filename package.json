@@ -13,12 +13,13 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "bugs": {
     "url": "https://github.com/shandilyaaryan/course-selling-be/issues"
   },
   "homepage": "https://github.com/shandilyaaryan/course-selling-be#readme",
   "dependencies": {
+    "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.19.3"
   }
