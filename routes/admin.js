@@ -1,4 +1,4 @@
-import { Router } from "express";   
+import { Router } from "express";
 import { adminModel } from "../db.js";
 
 const adminRouter = Router();
@@ -28,7 +28,7 @@ adminRouter.put("/course", (req, res) => {
   res.send("Admin add");
 });
 
-adminRouter.post("/course/bulk", (req, res) => {
+adminRouter.get("/course/bulk", (req, res) => {
   res.send("These are the courses");
 });
 
