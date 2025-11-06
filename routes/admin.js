@@ -1,9 +1,15 @@
-import { Router } from "express";
+import { Router } from "express";   
+import { adminModel } from "../db.js";
 
 const adminRouter = Router();
 
-adminRouter.post("/signup", (req, res) => {
-  res.send("Admin signup");
+adminRouter.post("/signup", async (req, res) => {
+  const email = req.body.email;
+  const password = req.body.password;
+  await adminModel.create({
+    email,
+    password
+  }) 
 });
 
 adminRouter.post("/signin", (req, res) => {
