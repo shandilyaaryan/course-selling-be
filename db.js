@@ -1,13 +1,4 @@
 import mongoose from "mongoose";
-import 'dotenv/config.js'
-
-console.log("trying")
-
-const response = await mongoose.connect(process.env.MONGODB_URL)
-
-if (mongoose) {
-    console.log("connected to db")
-}
 
 const { Schema } = mongoose;
 
@@ -30,7 +21,7 @@ const courseSchema = new Schema({
   description: String,
   imageURL: String,
   price: Number,
-  creatorID: { type: Schema.Types.ObjectId},
+  creatorID: { type: Schema.Types.ObjectId },
 });
 
 const purchaseSchema = new Schema({
@@ -38,8 +29,7 @@ const purchaseSchema = new Schema({
   courseID: { type: Schema.Types.ObjectId },
 });
 
-
-export const userModel = mongoose.model('user', userSchema);
-export const adminModel = mongoose.model('admin', userSchema);
-export const courseModel = mongoose.model('course', userSchema);
-export const purchaseModel = mongoose.model('purchase', userSchema);
+export const userModel = mongoose.model("user", userSchema);
+export const adminModel = mongoose.model("admin", adminSchema);
+export const courseModel = mongoose.model("course", courseSchema);
+export const purchaseModel = mongoose.model("purchase", purchaseSchema);
