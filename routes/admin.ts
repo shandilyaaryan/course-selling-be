@@ -1,15 +1,8 @@
-import { Router } from "express";
-import { adminModel } from "../db.js";
+import { Router } from "express";  
 
 const adminRouter = Router();
 
-adminRouter.post("/signup", async (req, res) => {
-  const email = req.body.email;
-  const password = req.body.password;
-  await adminModel.create({
-    email,
-    password
-  }) 
+adminRouter.post("/signup", (req, res) => {
 });
 
 adminRouter.post("/signin", (req, res) => {
