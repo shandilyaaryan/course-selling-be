@@ -1,17 +1,36 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Document, Schema, type CallbackError } from "mongoose";
+import bcrypt from "bcrypt";
 
-const userSchema = new Schema({
+interface IUser extends Document {
+  username: string;
+  password: string;
+  firstName?: string;
+  lastName?: string;
+  isModified(path: string): boolean;
+}
+
+async function hashPassword(this: IUser, next: (err?: CallbackError) => void) {
+  if (!this.isModified("password")) return next();
+  this.password = await bcrypt.hash(this.password, 10);
+  next();
+}
+
+const userSchema = new Schema<IUser>({
   username: { type: String, unique: true, required: true },
-  password: String,
+  password: { type: String, required: true },
   firstName: String,
   lastName: String,
 });
-const adminSchema = new Schema({
+
+const adminSchema = new Schema<IUser>({
   username: { type: String, unique: true, required: true },
-  password: String,
+  password: { type: String, required: true },
   firstName: String,
   lastName: String,
 });
+
+userSchema.pre("save", hashPassword);
+adminSchema.pre("save", hashPassword);
 
 const courseSchema = new Schema({
   title: String,
@@ -22,9 +41,9 @@ const courseSchema = new Schema({
 });
 
 const purchaseSchema = new Schema({
-  userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
-  creatorId: { type: Schema.Types.ObjectId, ref: "Admin", required: true },
-  courseId: { type: Schema.Types.ObjectId, ref: "Course", required: true },
+  creatorId: { type: Schema.Types.ObjectId, ref: "Admin" },
+  courseId: { type: Schema.Types.ObjectId, ref: "Course" },
+  userId: { type: Schema.Types.ObjectId, ref: "User" },
 });
 
 export const userModel = mongoose.model("User", userSchema);
